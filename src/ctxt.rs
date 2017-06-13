@@ -10,7 +10,7 @@
 //! defined.
 //!
 //! ```
-//! # use cortex_m::ctxt::Context;
+//! # use msp430::ctxt::Context;
 //! // This must be in a library crate
 //! /// Token unique to the TIM7 interrupt handler
 //! pub struct Tim7 { _0: () }
@@ -24,7 +24,7 @@
 //! ```
 //! # #![feature(const_fn)]
 //! # use std::cell::Cell;
-//! # use cortex_m::ctxt::{Context, Local};
+//! # use msp430::ctxt::{Context, Local};
 //! # struct Tim7;
 //! # unsafe impl Context for Tim7 {}
 //! // omitted: how to put this handler in the vector table
@@ -50,7 +50,7 @@
 //! ```
 //! # #![feature(const_fn)]
 //! # use std::cell::Cell;
-//! # use cortex_m::ctxt::{Context, Local};
+//! # use msp430::ctxt::{Context, Local};
 //! # struct Tim3;
 //! # struct Tim4;
 //! static TIM3_DATA: Local<Cell<bool>, Tim3> = Local::new(Cell::new(false));

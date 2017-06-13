@@ -40,15 +40,15 @@ where
 #[inline(always)]
 pub fn disable() {
     match () {
-        #[cfg(target_arch = "arm")]
+        #[cfg(target_arch = "msp430")]
         () => unsafe {
-            asm!("cpsid i"
+            asm!("dint { nop"
                  :
                  :
                  :
                  : "volatile");
         },
-        #[cfg(not(target_arch = "arm"))]
+        #[cfg(not(target_arch = "msp430"))]
         () => {}
     }
 }
@@ -61,15 +61,15 @@ pub fn disable() {
 #[inline(always)]
 pub unsafe fn enable() {
     match () {
-        #[cfg(target_arch = "arm")]
+        #[cfg(target_arch = "msp430")]
         () => {
-            asm!("cpsie i"
+            asm!("nop { eint { nop"
                  :
                  :
                  :
                  : "volatile");
         }
-        #[cfg(not(target_arch = "arm"))]
+        #[cfg(not(target_arch = "msp430"))]
         () => {}
     }
 }
@@ -88,7 +88,7 @@ pub fn free<F, R>(f: F) -> R
 where
     F: FnOnce(&CriticalSection) -> R,
 {
-    let primask = ::register::primask::read();
+    let status = ::register::sr::read();
 
     // disable interrupts
     disable();
@@ -97,7 +97,7 @@ where
 
     // If the interrupts were active before our `disable` call, then re-enable
     // them. Otherwise, keep them disabled
-    if primask.is_active() {
+    if status.gie() {
         unsafe { enable() }
     }
 

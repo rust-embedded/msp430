@@ -1,11 +1,11 @@
-[![crates.io](https://img.shields.io/crates/d/cortex-m.svg)](https://crates.io/crates/cortex-m)
-[![crates.io](https://img.shields.io/crates/v/cortex-m.svg)](https://crates.io/crates/cortex-m)
+[![crates.io](https://img.shields.io/crates/d/msp430.svg)](https://crates.io/crates/msp430)
+[![crates.io](https://img.shields.io/crates/v/msp430.svg)](https://crates.io/crates/msp430)
 
-# `cortex-m`
+# `msp430`
 
-> Low level access to Cortex-M processors
+> Low level access to MSP430 microcontrollers
 
-## [Documentation](https://docs.rs/crate/cortex-m)
+## [Documentation](https://docs.rs/crate/msp430)
 
 ## License
 

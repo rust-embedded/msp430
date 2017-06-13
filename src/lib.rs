@@ -1,14 +1,14 @@
-//! Low level access to Cortex-M processors
+//! Low level access to MSP430 microcontrollers
 //!
 //! This crate provides:
 //!
-//! - Access to core peripherals like NVIC, SCB and SysTick.
-//! - Access to core registers like CONTROL, MSP and PSR.
+//! - Access to core registers like SR.
 //! - Interrupt manipulation mechanisms
 //! - Data structures like the vector table
-//! - Safe wrappers around assembly instructions like `bkpt`
+//! - Safe wrappers around assembly instructions like `nop`
 
-#![cfg_attr(target_arch = "arm", feature(core_intrinsics))]
+#![cfg_attr(target_arch = "msp430", feature(core_intrinsics))]
+#![feature(abi_msp430_interrupt)]
 #![deny(missing_docs)]
 #![deny(warnings)]
 #![feature(asm)]
@@ -17,18 +17,13 @@
 #![no_std]
 
 extern crate aligned;
-pub extern crate cortex_m_semihosting as semihosting;
 extern crate volatile_register;
-
-#[macro_use]
-mod macros;
 
 #[macro_use]
 pub mod asm;
 pub mod ctxt;
 pub mod exception;
 pub mod interrupt;
-pub mod itm;
 pub mod peripheral;
 pub mod register;
 

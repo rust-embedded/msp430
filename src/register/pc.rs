@@ -2,10 +2,10 @@
 
 /// Reads the CPU register
 #[inline(always)]
-pub fn read() -> u32 {
+pub fn read() -> u16 {
     let r;
     unsafe {
-        asm!("mov $0,R15"
+        asm!("mov $0,R0"
              : "=r"(r)
              :
              :
@@ -16,8 +16,8 @@ pub fn read() -> u32 {
 
 /// Writes `bits` to the CPU register
 #[inline(always)]
-pub unsafe fn write(bits: u32) {
-    asm!("mov R15,$0"
+pub unsafe fn write(bits: u16) {
+    asm!("mov R0,$0"
          :
          : "r"(bits)
          :
