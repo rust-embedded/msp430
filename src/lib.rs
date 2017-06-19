@@ -29,7 +29,7 @@ pub mod register;
 
 /// A reserved spot in the vector table
 #[derive(Clone, Copy)]
-#[repr(u32)]
+#[repr(u16)]
 pub enum Reserved {
     /// Reserved
     Vector = 0,
