@@ -1,8 +1,11 @@
 //! Low level access to MSP430 microcontrollers
 //!
-//! This crate provides:
+//! This crate is based on [cortex-m](https://docs.rs/cortex-m)
+//! crate by Jorge Aparicio (@japaric).
 //!
-//! - Access to core registers like SR.
+//! It provides:
+//!
+//! - Access to core registers like SR and SP.
 //! - Interrupt manipulation mechanisms
 //! - Data structures like the vector table
 //! - Safe wrappers around assembly instructions like `nop`

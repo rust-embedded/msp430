@@ -5,6 +5,8 @@
 
 > Low level access to MSP430 microcontrollers
 
+This crate is based on [cortex-m](https://docs.rs/cortex-m) crate by Jorge Aparicio (@japaric).
+
 ## [Documentation](https://docs.rs/crate/msp430)
 
 ## License
