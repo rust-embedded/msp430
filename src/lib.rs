@@ -10,7 +10,6 @@
 //! - Data structures like the vector table
 //! - Safe wrappers around assembly instructions like `nop`
 
-#![cfg_attr(target_arch = "msp430", feature(core_intrinsics))]
 #![feature(abi_msp430_interrupt)]
 #![deny(missing_docs)]
 #![deny(warnings)]
