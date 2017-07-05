@@ -1,8 +1,5 @@
 [package]
-authors = [
-    "Vadzim Dambrouski <pftbest@gmail.com>",
-    "Jorge Aparicio <jorge@japaric.io>"
-]
+authors = ["Vadzim Dambrouski <pftbest@gmail.com>", "Jorge Aparicio <jorge@japaric.io>"]
 categories = ["embedded", "hardware-support", "no-std"]
 description = "Low level access to MSP430 microcontrollers"
 documentation = "https://docs.rs/msp430"
@@ -12,6 +9,5 @@ name = "msp430"
 repository = "https://github.com/pftbest/msp430"
 version = "0.1.0"
 
-[dependencies]
-aligned = "0.1.1"
-volatile-register = "0.2.0"
+[dependencies.mcu]
+git = "https://github.com/japaric/mcu"
