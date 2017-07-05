@@ -1,40 +1,6 @@
 //! Interrupts
 
-use core::cell::UnsafeCell;
-
-/// A "mutex" based on critical sections
-pub struct Mutex<T> {
-    inner: UnsafeCell<T>,
-}
-
-impl<T> Mutex<T> {
-    /// Creates a new mutex
-    pub const fn new(value: T) -> Self {
-        Mutex { inner: UnsafeCell::new(value) }
-    }
-}
-
-impl<T> Mutex<T> {
-    /// Borrows the data for the duration of the critical section
-    pub fn borrow<'cs>(&self, _ctxt: &'cs CriticalSection) -> &'cs T {
-        unsafe { &*self.inner.get() }
-    }
-}
-
-/// Interrupt number
-pub unsafe trait Nr {
-    /// Returns the number associated with this interrupt
-    fn nr(&self) -> u8;
-}
-
-// NOTE `Mutex` can be used as a channel so, the protected data must be `Send`
-// to prevent sending non-Sendable stuff (e.g. interrupt tokens) across
-// different execution contexts (e.g. interrupts)
-unsafe impl<T> Sync for Mutex<T>
-where
-    T: Send,
-{
-}
+pub use mcu::{CriticalSection, Mutex};
 
 /// Disables all interrupts
 #[inline(always)]
@@ -45,7 +11,7 @@ pub fn disable() {
             asm!("dint { nop"
                  :
                  :
-                 :
+                 : "memory"
                  : "volatile");
         },
         #[cfg(not(target_arch = "msp430"))]
@@ -66,19 +32,12 @@ pub unsafe fn enable() {
             asm!("nop { eint { nop"
                  :
                  :
-                 :
+                 : "memory"
                  : "volatile");
         }
         #[cfg(not(target_arch = "msp430"))]
         () => {}
     }
-}
-
-/// Critical section context
-///
-/// Indicates that you are executing code within a critical section
-pub struct CriticalSection {
-    _0: (),
 }
 
 /// Execute closure `f` in an interrupt-free context.
@@ -93,7 +52,7 @@ where
     // disable interrupts
     disable();
 
-    let r = f(&CriticalSection { _0: () });
+    let r = f(unsafe { &CriticalSection::new() });
 
     // If the interrupts were active before our `disable` call, then re-enable
     // them. Otherwise, keep them disabled

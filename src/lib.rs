@@ -18,21 +18,10 @@
 #![feature(naked_functions)]
 #![no_std]
 
-extern crate aligned;
-extern crate volatile_register;
+extern crate mcu;
 
 #[macro_use]
 pub mod asm;
-pub mod ctxt;
-pub mod exception;
 pub mod interrupt;
 pub mod peripheral;
 pub mod register;
-
-/// A reserved spot in the vector table
-#[derive(Clone, Copy)]
-#[repr(u16)]
-pub enum Reserved {
-    /// Reserved
-    Vector = 0,
-}
