@@ -15,7 +15,7 @@
 #![feature(asm)]
 #![no_std]
 
-extern crate mcu;
+extern crate bare_metal;
 
 #[macro_use]
 pub mod asm;

@@ -1,6 +1,6 @@
 //! Interrupts
 
-pub use mcu::{CriticalSection, Mutex};
+pub use bare_metal::{CriticalSection, Mutex};
 
 /// Disables all interrupts
 #[inline(always)]
