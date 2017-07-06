@@ -1,4 +1,4 @@
 //! Core peripherals
 //!
 
-pub use mcu::Peripheral;
+pub use bare_metal::Peripheral;
