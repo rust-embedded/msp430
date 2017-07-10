@@ -7,7 +7,6 @@
 //!
 //! - Access to core registers like SR and SP.
 //! - Interrupt manipulation mechanisms
-//! - Data structures like the vector table
 //! - Safe wrappers around assembly instructions like `nop`
 
 #![deny(missing_docs)]
