@@ -77,7 +77,7 @@ impl Sr {
 pub fn read() -> Sr {
     let r: u16;
     unsafe {
-        asm!("mov $0, R2"
+        asm!("mov R2, $0"
              : "=r"(r)
              :
              :
