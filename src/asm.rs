@@ -11,3 +11,11 @@ pub fn nop() {
              : "volatile");
     }
 }
+
+/// A compiler fence, prevents instruction reordering.
+#[inline(always)]
+pub fn barrier() {
+    unsafe {
+        asm!("" ::: "memory" : "volatile");
+    }
+}
