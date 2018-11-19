@@ -6,9 +6,10 @@ matrix:
       rust: nightly
       if: (branch = staging OR branch = trying) OR (type = pull_request AND branch = master)
 
-    - env: TARGET=msp430-none-elf
-      rust: nightly
-      if: (branch = staging OR branch = trying) OR (type = pull_request AND branch = master)
+      # TODO uncomment this when we figure out how to install msp430-none-elf
+    # - env: TARGET=msp430-none-elf
+      # rust: nightly
+      # if: (branch = staging OR branch = trying) OR (type = pull_request AND branch = master)
 
 before_install: set -e
 
