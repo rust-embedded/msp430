@@ -7,7 +7,7 @@ keywords = ["msp430", "interrupt", "register", "peripheral"]
 license = "MIT OR Apache-2.0"
 name = "msp430"
 repository = "https://github.com/pftbest/msp430"
-version = "0.1.1"
+version = "0.2.0"
 
 [dependencies.bare-metal]
 features = ["const-fn"]
