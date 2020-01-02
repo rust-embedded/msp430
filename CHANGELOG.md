@@ -9,13 +9,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v0.2.0] - 2019-12-26
 
-Updated bare_metal to 0.2.x. The crate's API is compatible with 0.1.0, but
-using bare_metal v0.2.x causes incompatible type errors with device crates
-(PACs) using bare_metal v0.1.x. This requires a major version bump to fix.
+### Added
+- CI Support
+
+### Changed
+- Updated [bare-metal] to 0.2.x. This crate's API is source-compatible with
+0.1.0, but using bare_metal v0.2.x causes incompatible type errors with device
+crates (PACs) using [bare-metal] v0.1.x. This requires a major version bump to
+fix.
 
 ## v0.1.0 - 2017-07-22
 
 Initial release.
+
+[bare-metal]: https://github.com/japaric/bare-metal
 
 [Unreleased]: https://github.com/pftbest/msp430/compare/v0.2.0...HEAD
 [v0.2.0]: https://github.com/pftbest/msp430/compare/v0.1.0...v0.2.0
