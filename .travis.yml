@@ -22,7 +22,7 @@ before_install: set -e
 
 install:
   - bash ci/install.sh
-  - export PATH="$PATH:$PWD/msp430-gcc-7.3.2.154_linux64/bin"
+  - export PATH="$PATH:$PWD/msp430-gcc-8.3.1.25_linux64/bin"
 
 script:
   - bash ci/script.sh
