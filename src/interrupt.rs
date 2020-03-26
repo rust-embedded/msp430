@@ -40,6 +40,13 @@ pub unsafe fn enable() {
     }
 }
 
+/// Safely enables all interrupts by consuming a `CriticalSection`, which ensures that subsequent
+/// code cannot borrow from a `Mutex` without creating a new critical section.
+#[inline(always)]
+pub fn enable_cs(_cs: CriticalSection) {
+    unsafe { enable() };
+}
+
 /// Execute closure `f` in an interrupt-free context.
 ///
 /// This as also known as a "critical section".
