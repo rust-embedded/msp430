@@ -4,7 +4,7 @@
 #[inline(always)]
 pub fn nop() {
     unsafe {
-        asm!("nop"
+        llvm_asm!("nop"
              :
              :
              :
@@ -16,6 +16,6 @@ pub fn nop() {
 #[inline(always)]
 pub fn barrier() {
     unsafe {
-        asm!("" ::: "memory" : "volatile");
+        llvm_asm!("" ::: "memory" : "volatile");
     }
 }

@@ -8,7 +8,7 @@ pub fn disable() {
     match () {
         #[cfg(target_arch = "msp430")]
         () => unsafe {
-            asm!("dint { nop"
+            llvm_asm!("dint { nop"
                  :
                  :
                  : "memory"
@@ -29,7 +29,7 @@ pub unsafe fn enable() {
     match () {
         #[cfg(target_arch = "msp430")]
         () => {
-            asm!("nop { eint { nop"
+            llvm_asm!("nop { eint { nop"
                  :
                  :
                  : "memory"

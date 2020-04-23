@@ -5,7 +5,7 @@
 pub fn read() -> u16 {
     let r;
     unsafe {
-        asm!("mov R0,$0"
+        llvm_asm!("mov R0,$0"
              : "=r"(r)
              :
              :
@@ -17,7 +17,7 @@ pub fn read() -> u16 {
 /// Writes `bits` to the CPU register
 #[inline(always)]
 pub unsafe fn write(bits: u16) {
-    asm!("mov $0,R0"
+    llvm_asm!("mov $0,R0"
          :
          : "r"(bits)
          :

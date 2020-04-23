@@ -10,8 +10,7 @@
 //! - Safe wrappers around assembly instructions like `nop`
 
 #![deny(missing_docs)]
-#![deny(warnings)]
-#![feature(asm)]
+#![feature(llvm_asm)]
 #![no_std]
 
 extern crate bare_metal;
