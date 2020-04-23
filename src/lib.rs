@@ -10,7 +10,6 @@
 //! - Safe wrappers around assembly instructions like `nop`
 
 #![deny(missing_docs)]
-#![deny(warnings)]
 #![feature(asm)]
 #![no_std]
 
