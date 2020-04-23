@@ -1,13 +1,13 @@
 [package]
-authors = ["Vadzim Dambrouski <pftbest@gmail.com>", "Jorge Aparicio <jorge@japaric.io>"]
+authors = ["Vadzim Dambrouski <pftbest@gmail.com>", "Jorge Aparicio <jorge@japaric.io>", "William D. Jones <thor0505@comcast.net>"]
 categories = ["embedded", "hardware-support", "no-std"]
 description = "Low level access to MSP430 microcontrollers"
 documentation = "https://docs.rs/msp430"
 keywords = ["msp430", "interrupt", "register", "peripheral"]
 license = "MIT OR Apache-2.0"
 name = "msp430"
-repository = "https://github.com/pftbest/msp430"
-version = "0.2.1"
+repository = "https://github.com/rust-embedded/msp430"
+version = "0.2.2"
 
 [dependencies.bare-metal]
 features = ["const-fn"]
