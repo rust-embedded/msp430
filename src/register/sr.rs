@@ -13,7 +13,7 @@ impl Sr {
     }
 
     /// Carry flag
-    /// This bit is set when the result of an operation produced a carry 
+    /// This bit is set when the result of an operation produced a carry
     /// and cleared when no carry occurred.
     pub fn c(&self) -> bool {
         self.bits & (1 << 0) != 0
@@ -77,7 +77,7 @@ impl Sr {
 pub fn read() -> Sr {
     let r: u16;
     unsafe {
-        asm!("mov R2, $0"
+        llvm_asm!("mov R2, $0"
              : "=r"(r)
              :
              :
