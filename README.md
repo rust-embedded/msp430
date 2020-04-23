@@ -7,6 +7,11 @@
 
 This crate is based on [cortex-m](https://docs.rs/cortex-m) crate by Jorge Aparicio (@japaric).
 
+**This crate requires a nightly rust due to the use of the `llvm_asm!`
+(`0.2.2` and above) or `asm!` (`0.2.1` and below) macro.** For `0.2.2`,
+`nightly-2020-04-22` is known to work. For `0.2.1`, `nightly-2020-01-04` is
+known to work.
+
 ## [Documentation](https://docs.rs/crate/msp430)
 
 ## License

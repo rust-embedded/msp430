@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v0.2.2] - 2020-04-23
+
+### Changed
+- All uses of the `asm!` macro have been replace with `llvm_asm!`, in
+accordance with [Issue 70173](https://github.com/rust-lang/rust/issues/70173).
+
+### Removed
+- `deny(warnings)` lint, as it's too restrictive.
+
 ## [v0.2.1] - 2020-04-23
 
 ### Added
@@ -32,6 +41,7 @@ Initial release.
 
 [bare-metal]: https://github.com/japaric/bare-metal
 
-[Unreleased]: https://github.com/pftbest/msp430/compare/v0.2.1...HEAD
-[v0.2.1]: https://github.com/pftbest/msp430/compare/v0.2.0...v0.2.1
-[v0.2.0]: https://github.com/pftbest/msp430/compare/v0.1.0...v0.2.0
+[Unreleased]: https://github.com/rust-embedded/msp430/compare/v0.2.2...HEAD
+[v0.2.2]: https://github.com/rust-embedded/msp430/compare/v0.2.1...v0.2.2
+[v0.2.1]: https://github.com/rust-embedded/msp430/compare/v0.2.0...v0.2.1
+[v0.2.0]: https://github.com/rust-embedded/msp430/compare/v0.1.0...v0.2.0
