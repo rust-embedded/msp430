@@ -23,7 +23,9 @@ pub fn disable() {
 ///
 /// # Safety
 ///
-/// - Do not call this function inside an `interrupt::free` critical section
+/// - In any function `f()` that calls `enable`, `CriticalSection` or `&CriticalSection` tokens cannot be used in `f()`'s body after the 
+///   call to `enable`. If `f()` owns `CriticalSection` tokens, it is recommended to [`drop`](https://doc.rust-lang.org/nightly/core/mem/fn.drop.html)
+///   these tokens before calling `enable`.
 #[inline(always)]
 pub unsafe fn enable() {
     match () {

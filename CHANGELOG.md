@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+- `enable_cs` removed due to soundness hole when interacting with `Clone` and
+  `interrupt::free`.
+
 ## [v0.2.2] - 2020-04-23
 
 ### Changed
