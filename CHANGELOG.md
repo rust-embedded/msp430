@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Bumped `bare-metal` to version `1.0.0`.
+
 ### Removed
 - `enable_cs` removed due to soundness hole when interacting with `Clone` and
   `interrupt::free`.
+- Remove `peripherals` module since the peripheral API is no longer provided by
+  `bare-metal`.
 
 ## [v0.2.2] - 2020-04-23
 

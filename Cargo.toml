@@ -10,5 +10,4 @@ repository = "https://github.com/rust-embedded/msp430"
 version = "0.3.0"
 
 [dependencies.bare-metal]
-features = ["const-fn"]
-version = "0.2.0"
+version = "1.0.0"

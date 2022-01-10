@@ -18,5 +18,4 @@ extern crate bare_metal;
 #[macro_use]
 pub mod asm;
 pub mod interrupt;
-pub mod peripheral;
 pub mod register;
