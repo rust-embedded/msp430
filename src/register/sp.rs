@@ -1,15 +1,13 @@
 //! Main Stack Pointer
 
+use crate::asm;
+
 /// Reads the CPU register
 #[inline(always)]
 pub fn read() -> u16 {
     let r;
     unsafe {
-        llvm_asm!("mov R1,$0"
-             : "=r"(r)
-             :
-             :
-             : "volatile");
+        asm!("mov R1, {0}", out(reg) r);
     }
     r
 }
@@ -17,9 +15,5 @@ pub fn read() -> u16 {
 /// Writes `bits` to the CPU register
 #[inline(always)]
 pub unsafe fn write(bits: u16) {
-    llvm_asm!("mov $0,R1"
-         :
-         : "r"(bits)
-         :
-         : "volatile");
+    asm!("mov {0}, R1", in(reg) bits);
 }

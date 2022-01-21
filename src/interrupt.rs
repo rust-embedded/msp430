@@ -1,5 +1,7 @@
 //! Interrupts
 
+use crate::asm;
+
 pub use bare_metal::{CriticalSection, Mutex};
 
 /// Disables all interrupts
@@ -8,11 +10,7 @@ pub fn disable() {
     match () {
         #[cfg(target_arch = "msp430")]
         () => unsafe {
-            llvm_asm!("dint { nop"
-                 :
-                 :
-                 : "memory"
-                 : "volatile");
+            asm!("dint {{ nop");
         },
         #[cfg(not(target_arch = "msp430"))]
         () => {}
@@ -31,11 +29,7 @@ pub unsafe fn enable() {
     match () {
         #[cfg(target_arch = "msp430")]
         () => {
-            llvm_asm!("nop { eint { nop"
-                 :
-                 :
-                 : "memory"
-                 : "volatile");
+            asm!("nop {{ eint {{ nop");
         }
         #[cfg(not(target_arch = "msp430"))]
         () => {}
