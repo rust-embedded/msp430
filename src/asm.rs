@@ -1,14 +1,12 @@
 //! Miscellaneous assembly instructions
 
+use crate::asm;
+
 /// A no-operation. Useful to prevent delay loops from being optimized away.
 #[inline(always)]
 pub fn nop() {
     unsafe {
-        llvm_asm!("nop"
-             :
-             :
-             :
-             : "volatile");
+        asm!("nop");
     }
 }
 
@@ -16,6 +14,6 @@ pub fn nop() {
 #[inline(always)]
 pub fn barrier() {
     unsafe {
-        llvm_asm!("" ::: "memory" : "volatile");
+        asm!("");
     }
 }

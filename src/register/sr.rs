@@ -1,5 +1,7 @@
 //! Status Register
 
+use crate::asm;
+
 /// Status Register
 #[derive(Clone, Copy, Debug)]
 pub struct Sr {
@@ -77,11 +79,7 @@ impl Sr {
 pub fn read() -> Sr {
     let r: u16;
     unsafe {
-        llvm_asm!("mov R2, $0"
-             : "=r"(r)
-             :
-             :
-             : "volatile");
+        asm!("mov R2, {0}", out(reg) r);
     }
     Sr { bits: r }
 }

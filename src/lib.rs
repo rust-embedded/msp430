@@ -10,8 +10,10 @@
 //! - Safe wrappers around assembly instructions like `nop`
 
 #![deny(missing_docs)]
-#![feature(llvm_asm)]
+#![feature(asm_experimental_arch)]
 #![no_std]
+
+use core::arch::asm;
 
 extern crate bare_metal;
 
