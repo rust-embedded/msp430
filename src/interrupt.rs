@@ -2,7 +2,7 @@
 
 use crate::asm;
 
-pub use bare_metal::{CriticalSection, Mutex};
+pub use critical_section::{CriticalSection, Mutex};
 
 /// Disables all interrupts
 #[inline(always)]
@@ -39,11 +39,12 @@ pub unsafe fn enable() {
 /// Execute closure `f` in an interrupt-free context.
 ///
 /// This as also known as a "critical section".
+#[deprecated(since = "0.3.1", note = "critical_section::with() allows alternate implementations; interrupt:free() is a hardcoded implementation of critical_section::with() with a different type signature.")]
 pub fn free<F, R>(f: F) -> R
 where
     F: for<'a> FnOnce(&'a CriticalSection<'a>) -> R,
 {
-    let status = ::register::sr::read();
+    let status = crate::register::sr::read();
 
     // disable interrupts
     disable();
