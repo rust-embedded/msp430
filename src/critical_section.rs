@@ -11,13 +11,22 @@ mod critical_section {
 
     unsafe impl critical_section::Impl for CriticalSection {
         unsafe fn acquire() -> RawRestoreState {
-            let enabled_on_entry = register::sr::read().gie();
+            let sr = register::sr::read().bits();
             interrupt::disable();
-            enabled_on_entry
+            // Safety: Sr is repr(C), RawRestoreState is u16, and Sr contains
+            // only a single u16. This should be fine.
+            core::mem::transmute(sr)
         }
 
-        unsafe fn release(enabled_on_entry: RawRestoreState) {
-            if enabled_on_entry {
+        unsafe fn release(sr: RawRestoreState) {
+            // Safety: Must be called w/ acquire, otherwise we could receive
+            // an invalid Sr (even though internally it's a u16, not all bits
+            // are actually used). It would be better to pass Sr as
+            // RawRestoreState, but since we can't, this will be acceptable,
+            // See acquire() for why this is safe.
+            let sr: register::sr::Sr = core::mem::transmute(sr);
+
+            if sr.gie() {
                 interrupt::enable();
             }
         }
