@@ -11,7 +11,10 @@ version = "0.3.1"
 edition = "2018"
 
 [features]
-critical-section = ["critical-section/restore-state-u16"]
+critical-section-single-core = ["critical-section/restore-state-u16"]
+outline-cs = ["outline-cs-acq", "outline-cs-rel"]
+outline-cs-acq = []
+outline-cs-rel = []
 
 [dependencies.critical-section]
 version = "1.0.0"

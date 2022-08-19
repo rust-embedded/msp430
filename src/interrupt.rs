@@ -57,14 +57,18 @@ where
     r
 }
 
-#[inline]
+// Not strictly necessary, but these two functions exist done to keep parity
+// with critical_section::with() and to test size optimizations easily.
+#[cfg_attr(any(feature = "outline-cs", feature = "outline-cs-acq"), inline(never))]
+#[cfg_attr(all(not(feature = "outline-cs"), not(feature="outline-cs-acq")), inline)]
 unsafe fn acquire() -> crate::register::sr::Sr {
     let status = crate::register::sr::read();
     disable();
     status
 }
 
-#[inline]
+#[cfg_attr(any(feature = "outline-cs", feature = "outline-cs-rel"), inline(never))]
+#[cfg_attr(all(not(feature = "outline-cs"), not(feature="outline-cs-rel")), inline)]
 unsafe fn release(sr: crate::register::sr::Sr) {
     if sr.gie() {
         enable()
