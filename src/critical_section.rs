@@ -10,6 +10,7 @@ mod critical_section {
     critical_section::set_impl!(CriticalSection);
 
     unsafe impl critical_section::Impl for CriticalSection {
+        #[inline]
         unsafe fn acquire() -> RawRestoreState {
             let sr = register::sr::read().bits();
             interrupt::disable();
@@ -18,6 +19,7 @@ mod critical_section {
             core::mem::transmute(sr)
         }
 
+        #[inline]
         unsafe fn release(sr: RawRestoreState) {
             // Safety: Must be called w/ acquire, otherwise we could receive
             // an invalid Sr (even though internally it's a u16, not all bits

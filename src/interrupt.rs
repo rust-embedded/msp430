@@ -44,19 +44,29 @@ pub fn free<F, R>(f: F) -> R
 where
     F: for<'a> FnOnce(&'a CriticalSection<'a>) -> R,
 {
-    let status = crate::register::sr::read();
-
     // disable interrupts
-    disable();
+    let status = unsafe { acquire() };
 
     let cs = unsafe { CriticalSection::new() };
     let r = f(&cs);
 
     // If the interrupts were active before our `disable` call, then re-enable
     // them. Otherwise, keep them disabled
-    if status.gie() {
-        unsafe { enable() }
-    }
+    unsafe { release(status); }
 
     r
+}
+
+#[inline]
+unsafe fn acquire() -> crate::register::sr::Sr {
+    let status = crate::register::sr::read();
+    disable();
+    status
+}
+
+#[inline]
+unsafe fn release(sr: crate::register::sr::Sr) {
+    if sr.gie() {
+        enable()
+    }
 }
