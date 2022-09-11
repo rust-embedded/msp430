@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [v0.4.0] - 2022-09-10
+## [v0.4.0] - 2022-09-11
 
 ### Added
 - Add a default-disabled `critical-section-single-core` feature, which
@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `Sr` struct now has `repr(C)` to [allow transmuting](https://doc.rust-lang.org/nomicon/transmutes.html),
   which is required for the [critical-section] implementation. _This is
   documented for completeness, and is not part of the public ABI._
+- Inline asm now uses options (to allow/forbid optimizations).
 
 ### Deprecated
 - `interrupt::free` has been deprecated in favor of `critical_section::with`.
