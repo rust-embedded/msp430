@@ -79,7 +79,7 @@ impl Sr {
 pub fn read() -> Sr {
     let r: u16;
     unsafe {
-        asm!("mov R2, {0}", out(reg) r);
+        asm!("mov R2, {0}", out(reg) r, options(nomem, nostack, preserves_flags));
     }
     Sr { bits: r }
 }

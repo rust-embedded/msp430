@@ -10,7 +10,9 @@ pub fn disable() {
     match () {
         #[cfg(target_arch = "msp430")]
         () => unsafe {
-            asm!("dint {{ nop");
+            // Do not use `nomem` and `readonly` because prevent subsequent memory accesses from being reordered before interrupts are disabled.
+            // Do not use `preserves_flags` because DINT modifies the GIE (global interrupt enable) bit of the status register.
+            asm!("dint {{ nop", options(nostack));
         },
         #[cfg(not(target_arch = "msp430"))]
         () => {}
@@ -29,7 +31,9 @@ pub unsafe fn enable() {
     match () {
         #[cfg(target_arch = "msp430")]
         () => {
-            asm!("nop {{ eint {{ nop");
+            // Do not use `nomem` and `readonly` because prevent preceding memory accesses from being reordered after interrupts are enabled.
+            // Do not use `preserves_flags` because EINT modifies the GIE (global interrupt enable) bit of the status register.
+            asm!("nop {{ eint {{ nop", options(nostack));
         }
         #[cfg(not(target_arch = "msp430"))]
         () => {}
