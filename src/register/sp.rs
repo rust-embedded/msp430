@@ -7,7 +7,7 @@ use crate::asm;
 pub fn read() -> u16 {
     let r;
     unsafe {
-        asm!("mov R1, {0}", out(reg) r);
+        asm!("mov R1, {0}", out(reg) r, options(nomem, nostack, preserves_flags));
     }
     r
 }
