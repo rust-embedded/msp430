@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v0.4.0] - 2022-09-10
+
+### Added
+- Add a default-disabled `critical-section-single-core` feature, which
+  implements the `acquire` and `release` functions required by the
+  [critical-section] crate by disabling interrupts.
+  - This feature is disabled by default to permit a user to
+    [plug in](https://github.com/rust-embedded/critical-section#providing-an-implementation)
+    other implementations of the [critical-section] crate. Previously,
+    `acquire` and `release` were unconditionally implemented within
+    `interrupt::free`. Gating always-enabled functionality behind a
+    default-disabled feature is a breaking change, and warrants a version bump
+    to `0.4.0`.
+- Add default-disabled `outline-cs`, `outline-cs-acq`, and `outline-cs-rel`
+  features to optimize the size of the `acquire` and `release` funtions.
+
+### Changed
+- Switch from [bare-metal] version `1.0.0` to [critical-section] `1.0.0`.
+  [critical-section] provides an API compatible with `bare-metal`, but requires
+  an external crate to provide some functions (such as this crate).
+- `Sr` struct now has `repr(C)` to [allow transmuting](https://doc.rust-lang.org/nomicon/transmutes.html),
+  which is required for the [critical-section] implementation. _This is
+  documented for completeness, and is not part of the public ABI._
+
+### Deprecated
+- `interrupt::free` has been deprecated in favor of `critical_section::with`.
+  The old function is kept for backwards compatibility _and is functionally
+  identical to a hardcoded implementation of `critical_section::with` which
+  disables interrupts._ `interrupt::free` will be removed in the major version
+  bump (likely `0.5.0`).
+
 ## [v0.3.0] - 2022-01-25
 
 ### Changed
@@ -58,8 +89,10 @@ fix.
 Initial release.
 
 [bare-metal]: https://github.com/japaric/bare-metal
+[critical-section]: https://github.com/rust-embedded/critical-section
 
-[Unreleased]: https://github.com/rust-embedded/msp430/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/rust-embedded/msp430/compare/v0.4.0...HEAD
+[v0.4.0]: https://github.com/rust-embedded/msp430/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/rust-embedded/msp430/compare/v0.2.2...v0.3.0
 [v0.2.2]: https://github.com/rust-embedded/msp430/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/rust-embedded/msp430/compare/v0.2.0...v0.2.1

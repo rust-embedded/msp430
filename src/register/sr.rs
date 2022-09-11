@@ -4,6 +4,7 @@ use crate::asm;
 
 /// Status Register
 #[derive(Clone, Copy, Debug)]
+#[repr(C)]
 pub struct Sr {
     bits: u16,
 }

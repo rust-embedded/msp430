@@ -2,7 +2,7 @@
 
 use crate::asm;
 
-pub use bare_metal::{CriticalSection, Mutex};
+pub use critical_section::{CriticalSection, Mutex};
 
 /// Disables all interrupts
 #[inline(always)]
@@ -43,23 +43,38 @@ pub unsafe fn enable() {
 /// Execute closure `f` in an interrupt-free context.
 ///
 /// This as also known as a "critical section".
+#[deprecated(since = "0.4.0", note = "critical_section::with() allows alternate implementations; interrupt:free() is a hardcoded implementation of critical_section::with() with a different type signature.")]
 pub fn free<F, R>(f: F) -> R
 where
     F: for<'a> FnOnce(&'a CriticalSection<'a>) -> R,
 {
-    let status = ::register::sr::read();
-
     // disable interrupts
-    disable();
+    let status = unsafe { acquire() };
 
     let cs = unsafe { CriticalSection::new() };
     let r = f(&cs);
 
     // If the interrupts were active before our `disable` call, then re-enable
     // them. Otherwise, keep them disabled
-    if status.gie() {
-        unsafe { enable() }
-    }
+    unsafe { release(status); }
 
     r
+}
+
+// Not strictly necessary, but these two functions exist done to keep parity
+// with critical_section::with() and to test size optimizations easily.
+#[cfg_attr(any(feature = "outline-cs", feature = "outline-cs-acq"), inline(never))]
+#[cfg_attr(all(not(feature = "outline-cs"), not(feature="outline-cs-acq")), inline)]
+unsafe fn acquire() -> crate::register::sr::Sr {
+    let status = crate::register::sr::read();
+    disable();
+    status
+}
+
+#[cfg_attr(any(feature = "outline-cs", feature = "outline-cs-rel"), inline(never))]
+#[cfg_attr(all(not(feature = "outline-cs"), not(feature="outline-cs-rel")), inline)]
+unsafe fn release(sr: crate::register::sr::Sr) {
+    if sr.gie() {
+        enable()
+    }
 }

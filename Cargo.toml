@@ -7,7 +7,14 @@ keywords = ["msp430", "interrupt", "register", "peripheral"]
 license = "MIT OR Apache-2.0"
 name = "msp430"
 repository = "https://github.com/rust-embedded/msp430"
-version = "0.3.0"
+version = "0.4.0"
+edition = "2018"
 
-[dependencies.bare-metal]
+[features]
+critical-section-single-core = ["critical-section/restore-state-u16"]
+outline-cs = ["outline-cs-acq", "outline-cs-rel"]
+outline-cs-acq = []
+outline-cs-rel = []
+
+[dependencies.critical-section]
 version = "1.0.0"

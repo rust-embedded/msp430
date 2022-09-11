@@ -15,9 +15,7 @@
 
 use core::arch::asm;
 
-extern crate bare_metal;
-
-#[macro_use]
 pub mod asm;
+pub mod critical_section;
 pub mod interrupt;
 pub mod register;
