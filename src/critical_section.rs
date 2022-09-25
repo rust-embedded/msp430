@@ -16,16 +16,16 @@ mod critical_section_single_core {
         // I don't believe #[inline] or #[inline(always)] hints work for
         // functions marked as "extern" in another crate (which is the case
         // for the acquire()/release() here- see critical_section crate).
-        #[cfg_attr(any(feature = "outline-cs", feature = "outline-cs-acq"), inline(never))]
+        #[cfg_attr(feature = "outline-cs-acq", inline(never))]
         unsafe fn acquire() -> RawRestoreState {
             let sr = register::sr::read().bits();
             interrupt::disable();
-            // Safety: Sr is repr(C), RawRestoreState is u16, and Sr contains
-            // only a single u16. This should be fine.
+            // Safety: Sr is repr(transparent), RawRestoreState is u16, and Sr
+            // contains only a single u16. This should be fine.
             core::mem::transmute(sr)
         }
 
-        #[cfg_attr(any(feature = "outline-cs", feature = "outline-cs-rel"), inline(never))]
+        #[cfg_attr(feature = "outline-cs-rel", inline(never))]
         unsafe fn release(sr: RawRestoreState) {
             // Safety: Must be called w/ acquire, otherwise we could receive
             // an invalid Sr (even though internally it's a u16, not all bits
