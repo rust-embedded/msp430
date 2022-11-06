@@ -18,6 +18,8 @@ mod critical_section_single_core {
         // for the acquire()/release() here- see critical_section crate).
         #[cfg_attr(feature = "outline-cs-acq", inline(never))]
         unsafe fn acquire() -> RawRestoreState {
+            // Disable interrupts and make sure we know whether they were
+            // enabled or not before entering this function.
             let sr = register::sr::read().bits();
             interrupt::disable();
             // Safety: Sr is repr(transparent), RawRestoreState is u16, and Sr
@@ -34,6 +36,8 @@ mod critical_section_single_core {
             // See acquire() for why this is safe.
             let sr: register::sr::Sr = core::mem::transmute(sr);
 
+            // If the interrupts were active before our `disable` call, then re-enable
+            // them. Otherwise, keep them disabled.
             if sr.gie() {
                 interrupt::enable();
             }

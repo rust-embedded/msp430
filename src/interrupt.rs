@@ -48,14 +48,11 @@ pub fn free<F, R>(f: F) -> R
 where
     F: for<'a> FnOnce(&'a CriticalSection<'a>) -> R,
 {
-    // disable interrupts
     let status = unsafe { acquire() };
 
     let cs = unsafe { CriticalSection::new() };
     let r = f(&cs);
 
-    // If the interrupts were active before our `disable` call, then re-enable
-    // them. Otherwise, keep them disabled
     unsafe { release(status); }
 
     r
@@ -63,17 +60,21 @@ where
 
 // Not strictly necessary, but these two functions exist done to keep parity
 // with critical_section::with() and to test size optimizations easily.
-#[cfg_attr(any(feature = "outline-cs", feature = "outline-cs-acq"), inline(never))]
-#[cfg_attr(all(not(feature = "outline-cs"), not(feature="outline-cs-acq")), inline)]
+#[cfg_attr(feature = "outline-cs-acq", inline(never))]
+#[cfg_attr(not(feature="outline-cs-acq"), inline)]
 unsafe fn acquire() -> crate::register::sr::Sr {
+    // Disable interrupts and make sure we know whether they were enabled or
+    // not before entering this function.
     let status = crate::register::sr::read();
     disable();
     status
 }
 
-#[cfg_attr(any(feature = "outline-cs", feature = "outline-cs-rel"), inline(never))]
-#[cfg_attr(all(not(feature = "outline-cs"), not(feature="outline-cs-rel")), inline)]
+#[cfg_attr(feature = "outline-cs-rel", inline(never))]
+#[cfg_attr(not(feature="outline-cs-rel"), inline)]
 unsafe fn release(sr: crate::register::sr::Sr) {
+    // If the interrupts were active before our `disable` call, then re-enable
+    // them. Otherwise, keep them disabled.
     if sr.gie() {
         enable()
     }
