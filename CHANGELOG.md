@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v0.4.1] - 2022-12-04
+
+### Fixed
+- `Sr` uses `repr(transparent)` instead of `repr(C)`; the former can be more
+  safely used with `transmute`.
+- The `outline-cs` feature does not need to be used in `cfg` predicates.
+
 ## [v0.4.0] - 2022-09-11
 
 ### Added
@@ -92,7 +99,8 @@ Initial release.
 [bare-metal]: https://github.com/japaric/bare-metal
 [critical-section]: https://github.com/rust-embedded/critical-section
 
-[Unreleased]: https://github.com/rust-embedded/msp430/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/rust-embedded/msp430/compare/v0.4.1...HEAD
+[v0.4.1]: https://github.com/rust-embedded/msp430/compare/v0.4.0...v0.4.1
 [v0.4.0]: https://github.com/rust-embedded/msp430/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/rust-embedded/msp430/compare/v0.2.2...v0.3.0
 [v0.2.2]: https://github.com/rust-embedded/msp430/compare/v0.2.1...v0.2.2
